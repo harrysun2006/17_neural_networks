@@ -3,5 +3,16 @@ function hidden_probability = visible_state_to_hidden_probabilities(rbm_w, visib
 % <visible_state> is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
 % The returned value is a matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
 % This takes in the (binary) states of the visible units, and returns the activation probabilities of the hidden units conditional on those states.
-    error('not yet implemented');
+	hidden_probability=1./(1.+exp(-rbm_w*visible_state));
+	% hidden_probability=visible_state_to_hidden_probabilities2(rbm_w, visible_state);
+end
+
+function hidden_probability = visible_state_to_hidden_probabilities2(rbm_w, visible_state)
+	count_hu=size(rbm_w,1);
+	count_conf=size(visible_state,2);
+    hidden_probability=zeros(count_hu,count_conf);
+    for i=1:count_hu 
+    	sigma=rbm_w(i,:)*visible_state;
+    	hidden_probability(i,:)=1./(1+exp(-sigma));
+    end
 end
